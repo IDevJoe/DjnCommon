@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using DjnCommon.Exceptions;
 
 namespace DjnCommon.Attributes
@@ -27,6 +28,7 @@ namespace DjnCommon.Attributes
                 if (!type.IsSubclassOf(callingType)) continue;
                 if (type.Namespace == null) continue;
                 if (!type.Namespace.Equals(ns)) continue;
+                if (type.GetCustomAttribute(typeof(Discoverable)) == null) continue;
                 DjnLogging.GetLogger().Debug("Discovered type {type}", type.ToString());
                 
                 // Instantiate
